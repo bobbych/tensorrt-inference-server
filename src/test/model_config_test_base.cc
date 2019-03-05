@@ -47,7 +47,29 @@ ModelConfigTestBase::ValidateInit(
   result->clear();
 
   ModelConfig config;
+
   tfs::PlatformConfigMap platform_map;
+
+  // Make sure platform config map has corresponding keys
+  {
+    GraphDefBundleSourceAdapterConfig graphdef_config;
+    SavedModelBundleSourceAdapterConfig saved_model_config;
+    NetDefBundleSourceAdapterConfig netdef_config;
+    PlanBundleSourceAdapterConfig plan_config;
+    CustomBundleSourceAdapterConfig custom_config;
+
+    (*platform_map.mutable_platform_configs())[kTensorFlowGraphDefPlatform]
+          .mutable_source_adapter_config()->PackFrom(graphdef_config);
+    (*platform_map.mutable_platform_configs())[kTensorFlowSavedModelPlatform]
+          .mutable_source_adapter_config()->PackFrom(saved_model_config);
+    (*platform_map.mutable_platform_configs())[kCaffe2NetDefPlatform]
+          .mutable_source_adapter_config()->PackFrom(netdef_config);
+    (*platform_map.mutable_platform_configs())[kTensorRTPlanPlatform]
+          .mutable_source_adapter_config()->PackFrom(plan_config);
+    (*platform_map.mutable_platform_configs())[kCustomPlatform]
+          .mutable_source_adapter_config()->PackFrom(custom_config);
+  }
+
   tensorflow::Status status =
       GetNormalizedModelConfig(model_path, platform_map, autofill, &config);
   if (!status.ok()) {
