@@ -32,6 +32,11 @@
 #include "src/core/constants.h"
 #include "src/core/logging.h"
 #include "src/core/utils.h"
+#include "src/servables/caffe2/netdef_bundle.pb.h"
+#include "src/servables/custom/custom_bundle.pb.h"
+#include "src/servables/tensorflow/graphdef_bundle.pb.h"
+#include "src/servables/tensorflow/savedmodel_bundle.pb.h"
+#include "src/servables/tensorrt/plan_bundle.pb.h"
 #include "tensorflow/core/platform/env.h"
 #include "tensorflow_serving/config/platform_config.pb.h"
 
